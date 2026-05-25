@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cottage Food Wizard — Sell homemade food in Minnesota</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #FAF6EE;
+    --warm-white: #FFFDF7;
+    --brown: #3B2A1A;
+    --brown-mid: #6B4C2E;
+    --brown-light: #A07850;
+    --amber: #E8943A;
+    --amber-light: #F5C47A;
+    --amber-pale: #FDF0D8;
+    --green: #2E5E3E;
+    --green-light: #4A8A5D;
+    --green-pale: #EAF4ED;
+    --text: #2A1F12;
+    --text-mid: #6B5A44;
+    --text-light: #9C876A;
+    --border: rgba(59, 42, 26, 0.12);
+    --radius: 12px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(250, 246, 238, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: var(--brown);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-logo-icon { font-size: 1.4rem; }
+  .nav-cta {
+    background: var(--amber);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: #d4832d; }
+
+  /* ── HERO ── */
+  .hero {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 5rem 2rem 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--green-pale);
+    color: var(--green);
+    border: 1px solid rgba(46, 94, 62, 0.2);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 1.25rem;
+  }
+  .eyebrow-dot { width: 6px; height: 6px; background: var(--green-light); border-radius: 50%; }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    line-height: 1.15;
+    color: var(--brown);
+    margin-bottom: 1.25rem;
+    font-weight: 700;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--amber);
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--text-mid);
+    margin-bottom: 2rem;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .hero-features {
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .hero-feature {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 0.9rem;
+    color: var(--text-mid);
+  }
+  .feature-check {
+    width: 20px; height: 20px; min-width: 20px;
+    background: var(--amber-pale);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 2px;
+    font-size: 11px;
+  }
+
+  /* ── FORM CARD ── */
+  .form-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 4px 32px rgba(59, 42, 26, 0.08);
+  }
+
+  .form-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    color: var(--brown);
+    margin-bottom: 0.25rem;
+  }
+  .form-card .form-sub {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+  }
+
+  .form-row { margin-bottom: 1rem; }
+  .form-row label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-mid);
+    margin-bottom: 5px;
+    letter-spacing: 0.01em;
+  }
+  .form-row .optional {
+    font-weight: 300;
+    color: var(--text-light);
+    font-size: 0.75rem;
+  }
+  .form-row input,
+  .form-row select,
+  .form-row textarea {
+    width: 100%;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+  .form-row input:focus,
+  .form-row select:focus,
+  .form-row textarea:focus {
+    border-color: var(--amber);
+    background: white;
+  }
+  .form-row input::placeholder,
+  .form-row textarea::placeholder { color: var(--text-light); }
+  .form-row textarea { resize: vertical; min-height: 70px; line-height: 1.5; }
+
+  .checkbox-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .checkbox-item {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 10px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    color: var(--text-mid);
+    transition: border-color 0.15s, background 0.15s;
+    user-select: none;
+  }
+  .checkbox-item:hover { border-color: var(--amber-light); background: var(--amber-pale); }
+  .checkbox-item input[type="checkbox"] { accent-color: var(--amber); width: 14px; height: 14px; }
+
+  .sell-options {
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .radio-item {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 9px 12px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--text-mid);
+    transition: border-color 0.15s, background 0.15s;
+    user-select: none;
+  }
+  .radio-item:hover { border-color: var(--amber-light); background: var(--amber-pale); }
+  .radio-item input[type="radio"] { accent-color: var(--amber); }
+
+  .submit-btn {
+    width: 100%;
+    background: var(--amber);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 1.25rem;
+    transition: background 0.2s, transform 0.1s;
+    letter-spacing: 0.01em;
+  }
+  .submit-btn:hover { background: #d4832d; }
+  .submit-btn:active { transform: scale(0.99); }
+
+  .form-disclaimer {
+    font-size: 0.73rem;
+    color: var(--text-light);
+    text-align: center;
+    margin-top: 0.75rem;
+    line-height: 1.5;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .section {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+  .section-eyebrow {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--brown);
+    margin-bottom: 0.5rem;
+  }
+  .section-sub {
+    color: var(--text-mid);
+    font-size: 0.95rem;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    max-width: 560px;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .step-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+  }
+  .step-num {
+    width: 36px; height: 36px;
+    background: var(--amber-pale);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  .step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    color: var(--brown);
+    margin-bottom: 0.4rem;
+  }
+  .step-desc { font-size: 0.85rem; color: var(--text-mid); line-height: 1.6; font-weight: 300; }
+
+  /* ── SOCIAL PROOF ── */
+  .proof-strip {
+    background: var(--green);
+    padding: 1.25rem 2rem;
+    display: flex; align-items: center; justify-content: center; gap: 3rem;
+    flex-wrap: wrap;
+  }
+  .proof-item {
+    display: flex; align-items: center; gap: 10px;
+    color: rgba(255,255,255,0.85);
+    font-size: 0.875rem;
+  }
+  .proof-icon { font-size: 1.3rem; }
+  .proof-number { font-weight: 500; color: white; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--text-light);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-text { animation: fadeUp 0.6s ease both; }
+  .form-card { animation: fadeUp 0.6s 0.15s ease both; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    .hero { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.25rem 2rem; }
+    .hero h1 { font-size: 2.25rem; }
+    .steps { grid-template-columns: 1fr; }
+    .checkbox-group { grid-template-columns: 1fr; }
+    .proof-strip { gap: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <span class="nav-logo-icon">🧙</span>
+    Cottage Food Wizard
+  </div>
+  <a href="#signup" class="nav-cta">Get early access</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">
+      <span class="eyebrow-dot"></span>
+      Now in early access · Minnesota
+    </div>
+    <h1>Turn your home kitchen into a <em>real business</em></h1>
+    <p class="hero-sub">
+      Cottage Food Wizard guides you through every step of becoming a licensed Minnesota cottage food producer — from application to first sale.
+    </p>
+    <div class="hero-features">
+      <div class="hero-feature">
+        <span class="feature-check">✓</span>
+        Step-by-step setup for new producers
+      </div>
+      <div class="hero-feature">
+        <span class="feature-check">✓</span>
+        One-click label generation for new products
+      </div>
+      <div class="hero-feature">
+        <span class="feature-check">✓</span>
+        Available in English, Español, and Hmong
+      </div>
+      <div class="hero-feature">
+        <span class="feature-check">✓</span>
+        Free to get started
+      </div>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <div class="form-card" id="signup">
+    <h2>Get early access</h2>
+    <p class="form-sub">Be first to know when we launch. No spam, ever.</p>
+
+    <div class="form-row">
+      <label>Your name</label>
+      <input type="text" placeholder="Maria Garcia">
+    </div>
+
+    <div class="form-row">
+      <label>Email address</label>
+      <input type="email" placeholder="maria@example.com">
+    </div>
+
+    <div class="form-row">
+      <label>Phone <span class="optional">(optional)</span></label>
+      <input type="tel" placeholder="(612) 555-0100">
+    </div>
+
+    <div class="form-row">
+      <label>What foods are you interested in producing?</label>
+      <div class="checkbox-group">
+        <label class="checkbox-item"><input type="checkbox"> Baked goods</label>
+        <label class="checkbox-item"><input type="checkbox"> Jams & jellies</label>
+        <label class="checkbox-item"><input type="checkbox"> Candy & sweets</label>
+        <label class="checkbox-item"><input type="checkbox"> Sauces & salsa</label>
+        <label class="checkbox-item"><input type="checkbox"> Pickles</label>
+        <label class="checkbox-item"><input type="checkbox"> Other</label>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label>How are you planning to sell?</label>
+      <div class="sell-options">
+        <label class="radio-item"><input type="radio" name="sell" value="market"> Farmers markets</label>
+        <label class="radio-item"><input type="radio" name="sell" value="online"> Online / social media</label>
+        <label class="radio-item"><input type="radio" name="sell" value="direct"> Direct to neighbors / community</label>
+        <label class="radio-item"><input type="radio" name="sell" value="multi"> Multiple channels</label>
+      </div>
+    </div>
+
+    <button class="submit-btn">Reserve my spot →</button>
+    <p class="form-disclaimer">Free to sign up. No credit card needed. We'll send one email when we launch.</p>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF STRIP -->
+<div class="proof-strip">
+  <div class="proof-item">
+    <span class="proof-icon">🏡</span>
+    <span><span class="proof-number">15,000+</span> registered cottage producers in MN</span>
+  </div>
+  <div class="proof-item">
+    <span class="proof-icon">📋</span>
+    <span>MN Dept. of Agriculture approved process</span>
+  </div>
+  <div class="proof-item">
+    <span class="proof-icon">🌎</span>
+    <span>English · Español · Hmong</span>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="section">
+  <div class="section-eyebrow">How it works</div>
+  <h2 class="section-title">From idea to first sale</h2>
+  <p class="section-sub">Whether you're just starting out or adding a new product, the Wizard handles the hard parts.</p>
+
+  <div class="steps">
+    <div class="step-card">
+      <div class="step-num">🧭</div>
+      <div class="step-title">Answer a few questions</div>
+      <p class="step-desc">Tell us what you want to make and where you plan to sell. We'll build your personalized checklist.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">⚡</div>
+      <div class="step-title">We handle what we can</div>
+      <p class="step-desc">Applications, label generation, and compliance checks — automated where possible, guided where not.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">🛒</div>
+      <div class="step-title">Start selling</div>
+      <p class="step-desc">Get your license, your labels, and your first product listing ready — in days, not months.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2025 Cottage Food Wizard · Minnesota · <a href="#" style="color: var(--text-light);">Privacy</a>
+</footer>
+
+</body>
+</html>
